@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+        crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="assets/css/reset.css"> -->
+    <!-- <link rel="stylesheet" href="assets/css/style.css"> -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+
+    <title>Hello, world!</title>
+</head>
+
+<body>
+    <div class="initial">
+        <div class="container">
+            <div class="jumbotron">
+                <h1 class="display-4">Welcome to Trivia World</h1>
+                <p class="lead">select a Category do Comence Game</p>
+                <hr class="my-4">
+                <div class="row">
+                    <div class="col-sm-6 text-center">
+                        <a class="btn btn-primary btn-lg" href="#" role="button">Restart</a>
+
+                    </div>
+                    <div class="col-sm-6 mx-auto">
+                        <div class="card mr-auto" style="width: 20rem;">
+                            <div id="bestScore" class="card-header">Best Score: 0</div>
+                            <ul class="list-group list-group-flush">
+                                <li id="gamesWon" class="list-group-item">Games Won: 0</li>
+                                <li id="gamesLost" class="list-group-item">Games Lost: 0</li>
+                                <li id="gamesPlayed" class="list-group-item">Total Games Played: 0</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="row d-flex justify-content-around text-center">
+                <button type="button" class="btn btn-primary m-4 catBtn" style="height: 100px; width: 300px;" value="technology">Technology</button>
+                <button type="button" class="btn btn-primary m-4 catBtn" style="height: 100px; width: 300px;" value="sports">Sports</button>
+                <button type="button" class="btn btn-primary m-4 catBtn" style="height: 100px; width: 300px;" value="science">Science</button>
+            </div>
+            <div class="row d-flex justify-content-around text-center">
+                <button type="button" class="btn btn-primary m-4 catBtn" style="height: 100px; width: 300px;" value="movies">Movies</button>
+                <button type="button" class="btn btn-primary m-4 catBtn" style="height: 100px; width: 300px;" value="music">Music</button>
+                <button type="button" class="btn btn-primary m-4 catBtn" style="height: 100px; width: 300px;" value="tv">Tv</button>
+            </div>
+            <div class="row d-flex justify-content-around text-center">
+                <button type="button" class="btn btn-primary m-4 catBtn" style="height: 100px; width: 300px;" value="geography">Geography</button>
+                <button type="button" class="btn btn-primary m-4 catBtn" style="height: 100px; width: 300px;" value="">Primary</button>
+                <button type="button" class="btn btn-primary m-4 catBtn" style="height: 100px; width: 300px;" value="">Primary</button>
+            </div>
+        </div>
+
+
+        <script>
+            var Question = function (question, possibleAns, corectAns) {
+                this.question = question;
+                this.possibleAns = possibleAns;
+                this.corectAns = corectAns;
+            }
+            var categories = {
+                technology: {
+                    question1: new Question('Which of the following was not a x86 CPU maker?', ['Motorola', 'Cyrix',
+                        'VIA',
+                        'IBM'
+                    ], 'Motorola'),
+                    question2: new Question(
+                        '1024 Gigabytes is equal to 1 Terabyte; 1024 Terabytes is equal to 1 Petabyte; How many Gigabytes are in a Petabyte?', [
+                            '200,480 Gigabytes', '40,096 Gigabytes', '1,000,000 Gigabytes', '2,048 Gigabytes'
+                        ], '1,000,000 Gigabytes'),
+                    question3: new Question('Which company invented the hard disk drive?', ['Hitachi', 'IBM',
+                        'Xerox',
+                        'Fujitsu'
+                    ], 'IBM'),
+                    question4: new Question('What was Comdex before it was shut down in the early 2000s?', [
+                        'One of the largest technology trade shows',
+                        'A tech recycling firm that became Newegg',
+                        'An online index of web domains for sale', 'The first online multiplayer card game'
+                    ], 'One of the largest technology trade shows'),
+                    question5: new Question(
+                        'In 2010, the United States Air Force used more than a thousand game consoles to build a supercomputer... which one?', [
+                            'Nintendo Wii', 'Xbox', 'Xbox 360', 'PlayStation 3'
+                        ], 'PlayStation 3'),
+                    question6: new Question(
+                        'The first webcam ever was deployed at Cambridge University, it was designed to monitor...?', [
+                            'Crows nesting outside a laboratory window',
+                            'A lounge refrigerator, to catch a lunch thief',
+                            'A coffee pot, to know when it was empty',
+                            'A door, which was opened via motion detection'
+                        ], 'A coffee pot, to know when it was empty'),
+                    question7: new Question(
+                        'What computer system was the first to win a chess match against a world champion under regular time constraints?', [
+                            'Watson', 'Cray Jaguar', 'Blue Gene', 'Deep Blue'
+                        ], 'Deep Blue'),
+                }
+            };
+
+            function renderQuestions(q, i) {
+                var $jumbotron = $('<div>', {
+                    class: 'jumbotron',
+                    id: `question${i}`
+                });
+                var $question = $('<h3>', {
+                    id: `question${i}`,
+                    text: q.question
+                });
+                var $hr = $('<hr>', {
+                    class: 'my-4',
+                });
+                $jumbotron.append($question, $hr)
+                for (j in q.possibleAns) {
+                    var $b = $('<button>', {
+                        type: 'button',
+                        class: 'btn btn-primary m-3 ansBtn',
+                        id: i,
+                        value: q.possibleAns[j],
+                        text: q.possibleAns[j]
+                    });
+                    $jumbotron.append($b)
+                }
+                $('body').append($jumbotron)
+            }
+
+            $('.catBtn').on('click', function () {
+                $('.initial').hide()
+                var selectedCat = $(this).val()
+                for (question in categories[selectedCat]) {
+                    renderQuestions(categories[selectedCat][question], question)
+                }
+                var correctAnsers = 0;
+                $('.ansBtn').on('click', function () {
+                    var rightAns = categories[selectedCat][$(this).attr('id')].corectAns
+                    sec = 10;
+                    if (sec > 0) {
+                        if ($(this).val() === rightAns) {
+                            $(this).attr('class', 'btn btn-success m-3 ansBtn')
+                            alert('corect')
+                            correctAnsers++;
+                        } else {
+                            $(this).attr('class', 'btn btn-danger m-3 ansBtn')
+                            alert('incorrect')
+                        }
+                    } else {
+                        // go to nex question
+                    }
+                })
+                console.log(correctAnsers)
+            });
+        </script>
+
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+            crossorigin="anonymous"></script>
+
+        <!-- <script src="assets/javascript/trivia.js"></script> -->
+</body>
+
+</html>
